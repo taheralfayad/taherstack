@@ -2,5 +2,4 @@ run this script to create a template dockerized go application with a svelte fro
 
 usage:
 
-`go build -o taherstack`
-`./taherstack`
+`go run taherstack.go`
