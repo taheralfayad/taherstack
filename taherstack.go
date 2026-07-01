@@ -61,5 +61,34 @@ func main() {
 		}
 	}
 
+	var files = [5]string{".gitignore", "Caddyfile", ".env.template", "SAMPLE_README.md", "docker-compose.yml"}
+
+	for _, file := range files {
+		var targetFile string
+		workDir, err := os.Getwd()
+
+		if err != nil {
+			fmt.Printf("failed to get workdir %v\n", err)
+			continue
+		}
+
+		currPath := filepath.Join(workDir, file)
+
+		if file == "SAMPLE_README.md" {
+			targetFile = "README.md"
+		} else {
+			targetFile = file
+		}
+
+		targetPath := filepath.Join(targetPath, targetFile)
+
+		cmd := exec.Command("cp", currPath, targetPath)
+
+		_, err = cmd.CombinedOutput()
+		if err != nil {
+			fmt.Printf("Failed to create subdir %v\n", err)
+			continue
+		}
+	}
 	fmt.Printf("Success! Project initialized at: %s\n", targetPath)
 }
