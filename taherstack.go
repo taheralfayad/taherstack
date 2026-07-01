@@ -42,11 +42,22 @@ func main() {
 	var subdirs = [2]string{"backend", "frontend"}
 
 	for _, dir := range subdirs {
-		subPath := filepath.Join(targetPath, dir)
-		err = os.MkdirAll(subPath, 0755)
+		workDir, err := os.Getwd()
 
 		if err != nil {
+			fmt.Printf("failed to get workdir %v\n", err)
+			continue
+		}
+
+		currPath := filepath.Join(workDir, dir)
+		targetPath := filepath.Join(targetPath, dir)
+
+		cmd := exec.Command("cp", "-r", currPath, targetPath)
+
+		_, err = cmd.CombinedOutput()
+		if err != nil {
 			fmt.Printf("Failed to create subdir %v\n", err)
+			continue
 		}
 	}
 
